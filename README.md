@@ -2,7 +2,7 @@
 
 بازی تیراندازی تاکتیکی سه‌بعدی فارسی — تک‌فایل HTML با موتور Three.js، لیدربورد آنلاین، چالش روزانه و نسخهٔ اندروید (APK).
 
-> 🎮 **همین الان بازی کن:** [نسخهٔ وب (GitHub Pages)](https://sahandmarami.github.io/sundown-range-2/game-src/) · 📱 **دانلود APK:** از بخش [Releases](https://github.com/sahandmarami/sundown-range-2/releases/latest) یا پوشهٔ [`download/`](download/)
+> 🎮 **همین الان بازی کن:** [نسخهٔ وب (GitHub Pages)](https://sahandmarami.github.io/sundown-range-2/) · 📱 **دانلود APK:** از بخش [Releases](https://github.com/sahandmarami/sundown-range-2/releases/latest) یا پوشهٔ [`download/`](download/)
 
 ---
 
