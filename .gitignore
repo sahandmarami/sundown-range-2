@@ -24,3 +24,9 @@ download/game.html
 
 # Skills (not part of project)
 skills/
+
+# Keep release APK in download/
+!download/*.apk
+# Signing secrets (never commit)
+apk-project/android/keystore.properties
+*.jks
