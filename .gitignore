@@ -1,2 +1,16 @@
-skills/
-node_modules/
+# Build artifacts
+apk-project/android/app/build/
+apk-project/android/.gradle/
+apk-project/android/build/
+apk-project/node_modules/
+apk-project/android/local.properties
+*.apk
+*.keystore
+
+# Local environment
+.env
+.env.local
+
+# Temp
+*.tmp
+*.log

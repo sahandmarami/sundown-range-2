@@ -1,0 +1,25 @@
+{
+  "name": "sundown-range-2",
+  "version": "1.0.0",
+  "description": "میدان غروب ۲ - بازی تیراندازی تاکتیکی",
+  "main": "index.js",
+  "scripts": {
+    "build:web": "echo 'No build step - static HTML'",
+    "cap:sync": "cap sync",
+    "cap:add:android": "cap add android",
+    "cap:open:android": "cap open android",
+    "build:apk": "cd android && ./gradlew assembleDebug",
+    "build:release": "cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/app": "^6.0.1",
+    "@capacitor/haptics": "^6.0.1",
+    "@capacitor/status-bar": "^6.0.1",
+    "@capacitor/splash-screen": "^6.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
+  }
+}
