@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#f2e2c4">
-<title>میدان غروب ۲ | نسخهٔ ۴٫۲ طلایی</title>
+<title>میدان غروب ۲ | نسخهٔ ۴٫۳ طلایی</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{overscroll-behavior:none}
 html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#26313d}
@@ -1742,7 +1742,7 @@ body{color:var(--tx-body)!important}
 <li><b>پنل‌های لغزان</b> مسیر تیر را می‌بندند، صبر کن تا باز شوند.</li>
 </ol></section>
 <section class="mpanel" id="p4"><div class="lbhead">۱۰ رکورد برتر <span id="lbMode">(محلی)</span><span id="myRank" class="myrank"></span></div><div id="scoreList"></div></section>
-<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4.2 GOLD</span></div>
+<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4.3 GOLD</span></div>
 <section class="mpanel on" id="p5">
  <div class="p-head">🎮 انتخاب حالت بازی</div>
  <div class="modecard" id="questCard">
@@ -9177,8 +9177,8 @@ var DODGE={grunt:1,runner:1,gunner:1};
 /* ================= RENDERER / SCENE ================= */
 var IS_MOBILE=(/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(navigator.userAgent||''))||(((navigator.maxTouchPoints||0)>1)&&Math.min(screen.width||9e9,screen.height||9e9)<820);if(IS_MOBILE)document.documentElement.classList.add('mob');
 var renderer=new THREE.WebGLRenderer({canvas:$('c'),antialias:true,stencil:false,powerPreference:'high-performance'});
-var PR_CAP=Math.min(window.devicePixelRatio||1,2);var PR_FLOOR=IS_MOBILE?1.1:.9,curPR=PR_CAP;
-renderer.setPixelRatio(curPR);renderer.setSize(innerWidth,innerHeight);
+var BASE_PR=Math.min(window.devicePixelRatio||1,2);
+renderer.setPixelRatio(BASE_PR);renderer.setSize(innerWidth,innerHeight);
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
 var scene=new THREE.Scene();scene.fog=new THREE.Fog(0xbe8a6d,58,270);
 var camera=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.05,400);camera.rotation.order='YXZ';camera.position.set(0,1.7,0);scene.add(camera);
@@ -10170,15 +10170,10 @@ function updLaser(){var on=state===ST.PLAY;beam.visible=on;laserDot.visible=fals
  beam.material.opacity=.16+.2*adsT;}
 
 /* ================= ADAPTIVE RESOLUTION v4.1 ================= */
-var ftAcc=0,ftN=0,ftWait=2.5,prAnnounced=false;
-function adaptPR(rdt){ftAcc+=rdt;ftN++;ftWait-=rdt;if(ftWait>0||ftN<30)return;var fps=ftN/Math.max(.0001,ftAcc);ftAcc=0;ftN=0;var ch=false;
- if(fps<36){if(curPR>PR_FLOOR+.001){curPR=Math.max(PR_FLOOR,curPR-.2);ch=true;if(!prAnnounced){prAnnounced=true;announce('برای روان‌شدن، کیفیت چند لحظه‌ای تنظیم شد');}}}
- else if(fps>54&&curPR<PR_CAP-.001){curPR=Math.min(PR_CAP,curPR+.1);ch=true;}
- if(ch){renderer.setPixelRatio(curPR);ftWait=3;}else ftWait=1.5;}
 /* ================= LOOP ================= */
 var last=performance.now(),artT=9;var dawnPulse=0;
 function loop(now){requestAnimationFrame(loop);
- var rdt=Math.min(.05,(now-last)/1000)||.016;last=now;var t=now/1000;dawnPulse=.5+.5*Math.sin(t*.18);if(!pauseGame)adaptPR(rdt);
+ var rdt=Math.min(.05,(now-last)/1000)||.016;last=now;var t=now/1000;dawnPulse=.5+.5*Math.sin(t*.18);
  if(slowT>0){slowT-=rdt;timeScale+=(slowF-timeScale)*Math.min(1,rdt*22);}else timeScale+=(1-timeScale)*Math.min(1,rdt*7);
  var gdt=rdt*timeScale;
   if(pauseGame)gdt=0;
@@ -10220,7 +10215,7 @@ function loop(now){requestAnimationFrame(loop);
  updCamera(rdt,t);updGun(rdt,t);updLaser();updAmmoHUD();updBossHUD();updThreat();
  if(state===ST.PLAY)updHUD();
  renderer.render(scene,camera);}
-var resizeTimer=null;function doResize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(curPR);renderer.setSize(innerWidth,innerHeight);}
+var resizeTimer=null;function doResize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(BASE_PR);renderer.setSize(innerWidth,innerHeight);}
 addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(doResize,120);});
 questLoad();loadScores();$('wep').textContent=TIERS[eqGun].name;updSky();renderCampaign();renderShop();updCoinsHUD();if(!tryResume())lockScreen(elMenu);requestAnimationFrame(loop);
 })();
