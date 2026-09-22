@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#f2e2c4">
-<title>میدان غروب ۲ | نسخهٔ ۴٫۳ طلایی</title>
+<title>میدان غروب ۲ | نسخهٔ ۴٫۴ طلایی</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{overscroll-behavior:none}
 html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#26313d}
@@ -1742,7 +1742,7 @@ body{color:var(--tx-body)!important}
 <li><b>پنل‌های لغزان</b> مسیر تیر را می‌بندند، صبر کن تا باز شوند.</li>
 </ol></section>
 <section class="mpanel" id="p4"><div class="lbhead">۱۰ رکورد برتر <span id="lbMode">(محلی)</span><span id="myRank" class="myrank"></span></div><div id="scoreList"></div></section>
-<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4.3 GOLD</span></div>
+<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4.4 GOLD</span></div>
 <section class="mpanel on" id="p5">
  <div class="p-head">🎮 انتخاب حالت بازی</div>
  <div class="modecard" id="questCard">
@@ -9093,11 +9093,11 @@ function stageComplete(){if(state!==ST.PLAY||!campStage||campWon)return;campWon=
  setTimeout(function(){if(state===ST.PLAY)gameOver();},1700);}
 function updCampHUD(){var c=CAMP[campStage-1];
  if(campaignBoss&&campaignBoss.cmd){
-  if(bossPhase==='wait')elLv.textContent='مرحله '+faNum(campStage)+' · '+faNum(Math.min(score,campaignBoss.gate))+'/'+faNum(campaignBoss.gate);
-  else if(bossPhase==='confirm')elLv.textContent='مرحله '+faNum(campStage)+' · فرمانده آماده است!';
-  else elLv.textContent='مرحله '+faNum(campStage)+' · '+campaignBoss.name;
+  if(bossPhase==='wait')_st44(elLv,'مرحله '+faNum(campStage)+' · '+faNum(Math.min(score,campaignBoss.gate))+'/'+faNum(campaignBoss.gate));
+  else if(bossPhase==='confirm')_st44(elLv,'مرحله '+faNum(campStage)+' · فرمانده آماده است!');
+  else _st44(elLv,'مرحله '+faNum(campStage)+' · '+campaignBoss.name);
   return;}
- elLv.textContent=campaignBoss?('مرحله '+faNum(campStage)+' · '+campaignBoss.name):('مرحله '+faNum(campStage)+' · '+faNum(Math.min(score,campaignGoal))+'/'+faNum(campaignGoal));}
+ _st44(elLv,campaignBoss?('مرحله '+faNum(campStage)+' · '+campaignBoss.name):('مرحله '+faNum(campStage)+' · '+faNum(Math.min(score,campaignGoal))+'/'+faNum(campaignGoal)));}
 function renderCampaign(){var g=$('stageGrid');if(!g)return;var h='';
  for(var i=1;i<=CAMP.length;i++){var un=i<=camp.unlocked,st=camp.stars[i]||0,c=CAMP[i-1];
   var stars='<span>'+'★'.repeat(st)+'</span><span class="dim">'+'★'.repeat(3-st)+'</span>';
@@ -9455,7 +9455,7 @@ function makePlate(x,z,hi){var g=new THREE.Group();g.position.set(x,0,z);var p1=
  [disc,rim,p1,p2,bar].forEach(function(m){m.userData.target=pl;shootables.push(m);});
  pl.hit=function(){if(pl.cd>0)return null;pl.cd=.8;pl.vel+=5.2;var c=Math.floor(pl.chain);var tR=Math.max(.12,.5*Math.pow(.55,c)),sR=Math.max(5,Math.round(40*Math.pow(.5,c)));pl.chain=Math.min(6,pl.chain+1);return{kind:'plate',score:sR,time:Math.round(tR*100)/100,hi:hi,chain:c};};
  pl.update=function(dt){pl.cd=Math.max(0,pl.cd-dt);pl.chain=Math.max(0,pl.chain-dt*.5);pl.vel+=(-16*pl.ang-2.4*pl.vel)*dt;pl.ang+=pl.vel*dt;pivot.rotation.x=pl.ang*.18;var k=Math.min(1,pl.chain/4);pl.discMat.color.setRGB(1-.3*k,1-.26*k,1-.22*k);};
- scene.add(g);plates.push(pl);return pl;}
+ g.userData.dyn44=1;scene.add(g);plates.push(pl);return pl;}
 makePlate(-5.5,-12,false);makePlate(5.5,-12,false);makePlate(-6,-18.5,false);makePlate(6,-18.5,false);makePlate(0,-24.5,true);makePlate(-9.5,-28.5,true);makePlate(9.5,-28.5,true);makePlate(0,-33,true);
 function makeMover(z,span,speed,ph){var g=new THREE.Group();g.position.set(0,0,z);var rail=new THREE.Mesh(new THREE.BoxGeometry(span*2+2,.1,.1),matSteelDark);rail.position.y=2.5;rail.castShadow=true;g.add(rail);for(var i=-1;i<=1;i+=2){var leg=new THREE.Mesh(new THREE.BoxGeometry(.1,2.5,.1),matSteelDark);leg.position.set(i*(span+1),1.25,0);leg.castShadow=true;g.add(leg);}var trolley=new THREE.Group();trolley.position.y=2.45;g.add(trolley);var pivot=new THREE.Group();trolley.add(pivot);for(var j=-1;j<=1;j+=2){var rd=new THREE.Mesh(new THREE.CylinderGeometry(.01,.01,.42,6),matSteelDark);rd.position.set(j*.16,-.21,0);pivot.add(rd);}var disc=new THREE.Mesh(new THREE.CylinderGeometry(.28,.28,.03,22),matSteel);disc.rotation.x=Math.PI/2;disc.position.y=-.7;disc.castShadow=true;pivot.add(disc);var core=new THREE.Mesh(new THREE.CylinderGeometry(.12,.12,.035,18),matOrange);core.rotation.x=Math.PI/2;core.position.y=-.7;pivot.add(core);
  var mv={t:ph,span:span,speed:speed,cd:0,active:false,ang:0,vel:0,meshes:[disc,core],pivot:pivot};
@@ -9463,12 +9463,12 @@ function makeMover(z,span,speed,ph){var g=new THREE.Group();g.position.set(0,0,z
  mv.setActive=function(on){if(on===mv.active)return;mv.active=on;g.visible=on;mv.meshes.forEach(function(m){var k=shootables.indexOf(m);if(on&&k<0)shootables.push(m);if(!on&&k>=0)shootables.splice(k,1);});};
  mv.hit=function(){if(!mv.active)return null;if(mv.cd>0)return null;mv.cd=.8;mv.vel+=6;return{kind:'mover',score:150,time:1.5};};
  mv.update=function(dt){if(!mv.active)return;mv.cd=Math.max(0,mv.cd-dt);mv.t+=dt*mv.speed*(state===ST.PLAY?(1+(level-1)*.11):1);trolley.position.x=Math.sin(mv.t)*mv.span;mv.vel+=(-20*mv.ang-2.6*mv.vel)*dt;mv.ang+=mv.vel*dt;pivot.rotation.x=mv.ang*.15;};
- g.visible=false;scene.add(g);movers.push(mv);return mv;}
+ g.userData.dyn44=1;g.visible=false;scene.add(g);movers.push(mv);return mv;}
 makeMover(-19.5,6.5,.9,0);makeMover(-29,7,1.25,2.1);makeMover(-38,7.5,1.6,4.2);
 function makeShutter(bx,bz,amp,speed,ph0){var g=new THREE.Group();g.position.set(bx,0,bz+.95);var railLen=amp*2+2.6;var rail=new THREE.Mesh(new THREE.BoxGeometry(railLen,.08,.08),matSteelDark);rail.position.y=2.32;rail.castShadow=true;rail.userData.env='metal';g.add(rail);shootables.push(rail);[-1,1].forEach(function(s){var leg=new THREE.Mesh(new THREE.CylinderGeometry(.04,.05,2.32,8),matSteelDark);leg.position.set(s*(railLen/2-.05),1.16,0);leg.castShadow=true;g.add(leg);});var slider=new THREE.Group();g.add(slider);var panelMat=M(0x3c4652,.62,.34,{emissive:0x141a22,emissiveIntensity:.55});var panel=new THREE.Mesh(new THREE.BoxGeometry(2,2.1,.07),panelMat);panel.position.y=1.2;panel.castShadow=true;panel.receiveShadow=true;panel.userData.env='metal';slider.add(panel);shootables.push(panel);var band=new THREE.Mesh(new THREE.BoxGeometry(2,.2,.08),matHazard);band.position.y=.24;band.castShadow=true;band.userData.env='metal';slider.add(band);shootables.push(band);[-0.7,0.7].forEach(function(x){var h=new THREE.Mesh(new THREE.BoxGeometry(.06,.25,.05),matSteelDark);h.position.set(x,2.22,0);slider.add(h);});var frameMat=M(0xffb14d,.5,.2,{emissive:0xff8a1e,emissiveIntensity:.6});[[0,2.27],[0,.13]].forEach(function(q){var fb=new THREE.Mesh(new THREE.BoxGeometry(2.06,.07,.09),frameMat);fb.position.set(q[0],1.2+ (q[1]-1.2),0);fb.position.y=q[1];slider.add(fb);});[[-1.02],[1.02]].forEach(function(q){var fs=new THREE.Mesh(new THREE.BoxGeometry(.07,2.16,.09),frameMat);fs.position.set(q[0],1.2,0);slider.add(fs);});
  var m={amp:amp,speed:speed,ph:ph0,slider:slider};
  m.update=function(dt){var sp=m.speed*(state===ST.PLAY?(1+(level-1)*.12):.7);m.ph+=dt*sp;slider.position.x=Math.sin(m.ph)*m.amp;};
- scene.add(g);shutters.push(m);return m;}
+ g.userData.dyn44=1;scene.add(g);shutters.push(m);return m;}
 makeShutter(0,-9,1.5,.47,0);makeShutter(3.5,-15,1.4,.53,2.1);makeShutter(-8.5,-22,1.5,.6,4);makeShutter(7,-31,1.4,.5,1.2);makeShutter(-3.5,-35,1.5,.58,3.1);
 
 /* ================= مدل‌های سه‌بعدی جایگزین =================
@@ -9847,14 +9847,22 @@ function updComboHUD(){var m=getMult();
  elFever.classList.toggle('on',feverOn);}
 var elLast=null,elLcNum=null,elTimeBox=null,elTDot=null;
 function timeGainFx(){if(!elTimeBox)elTimeBox=$('timeBox');elTimeBox.classList.remove('gain');void elTimeBox.offsetWidth;elTimeBox.classList.add('gain');}
+/* ===== v4.4: cached DOM setters — write only when value changes ===== */
+function _st44(el,v){if(el.__ct44!==v){el.__ct44=v;el.textContent=v;}}
+function _sw44(el,v){var s=v+'%';if(el.__cw44!==s){el.__cw44=s;el.style.width=s;}}
+function _tg44(el,c,on){on=!!on;var k='__cb44_'+c;if(el[k]!==on){el[k]=on;el.classList.toggle(c,on);}}
+function _on44(el,c){var k='__cb44_'+c;if(el[k]!==true){el[k]=true;el.classList.add(c);}}
+function _off44(el,c){var k='__cb44_'+c;if(el[k]!==false){el[k]=false;el.classList.remove(c);}}
+var _elSt44=null;
 function updHUD(){if(!elLast){elLast=$('lastcall');elLcNum=$('lcNum');elTDot=$('timeDot');}
- elTime.textContent=faNum(timeLeft.toFixed(1));elFill.style.width=(timeLeft/TMAX*100)+'%';
- var play=state===ST.PLAY,crit=timeLeft<=5&&play,danger=timeLeft<=3&&play,elState=$('timeState');
- elTime.classList.toggle('crit',crit);elState.classList.toggle('warn',timeLeft<=8&&timeLeft>3);elState.classList.toggle('danger',danger);
- elTDot.classList.toggle('warn',timeLeft<=8&&timeLeft>3);elTDot.classList.toggle('danger',danger);
- elState.textContent=danger?'خطر':(timeLeft<=8?'هشدار':'امن');
- document.body.classList.toggle('low',crit);document.body.classList.toggle('panic',danger);
- elLast.classList.toggle('on',crit);elLast.classList.toggle('deep',danger);}
+ if(!_elSt44)_elSt44=$('timeState');
+ _st44(elTime,faNum(timeLeft.toFixed(1)));_sw44(elFill,timeLeft/TMAX*100);
+ var play=state===ST.PLAY,crit=timeLeft<=5&&play,danger=timeLeft<=3&&play,elState=_elSt44;
+ _tg44(elTime,'crit',crit);_tg44(elState,'warn',timeLeft<=8&&timeLeft>3);_tg44(elState,'danger',danger);
+ _tg44(elTDot,'warn',timeLeft<=8&&timeLeft>3);_tg44(elTDot,'danger',danger);
+ _st44(elState,danger?'خطر':(timeLeft<=8?'هشدار':'امن'));
+ _tg44(document.body,'low',crit);_tg44(document.body,'panic',danger);
+ _tg44(elLast,'on',crit);_tg44(elLast,'deep',danger);}
 function updSky(){var k=Math.min(1,(level-1)/12);
  skyMat.uniforms.uTop.value.set(SKY_A.top).lerp(new THREE.Color(SKY_B.top),k);
  skyMat.uniforms.uHor.value.set(SKY_A.hor).lerp(new THREE.Color(SKY_B.hor),k);
@@ -9862,7 +9870,7 @@ function updSky(){var k=Math.min(1,(level-1)/12);
  skyMat.uniforms.uSun.value.set(SKY_A.sun).lerp(new THREE.Color(SKY_B.sun),k);
  scene.fog.color.set(SKY_A.fog).lerp(new THREE.Color(SKY_B.fog),k);scene.fog.near=54;scene.fog.far=330-k*26;
  sun.intensity=1.7-k*.32+0.14*dawnPulse;hemi.intensity=.62-k*.08+0.07*dawnPulse;amb.intensity=.15-k*.025;starMat.opacity=.22+k*.4;embMat.opacity=.45+k*.35;}
-function updLevel(){elLv.textContent='سطح '+faNum(level);
+function updLevel(){_st44(elLv,'سطح '+faNum(level));
  // پیشرفت نرم: هر سطح زمانِ بیشتری می‌خواهد و با کشتن دشمن سریع‌تر پر می‌شود؛ پرش چندسطحی ناممکن است
  if(campStage)return;
  if(state!==ST.PLAY||level>=40)return;
@@ -9874,10 +9882,10 @@ function updLevel(){elLv.textContent='سطح '+faNum(level);
 function updTick(){if(state===ST.PLAY&&timeLeft<5.05){var s=Math.ceil(timeLeft);if(s!==lastTick&&s>0){lastTick=s;sfxLastCall(s);sfxHeartbeat();hap('i','heavy');
   if(elLcNum){elLcNum.textContent=faNum(s);elLcNum.classList.remove('beat');void elLcNum.offsetWidth;elLcNum.classList.add('beat');}
   if(s===5)announce('پنج ثانیه!',true);if(s===5||s===3)sfxSiren();}}else lastTick=99;}
-function updAmmoHUD(){var T=TIERS[runTier],on=!!T.mag&&state===ST.PLAY;elAmmoBox.classList.toggle('on',on);if(!on)return;
- if(reloading>0){elAmmoBox.classList.add('reload');elAmmoBox.classList.remove('low');elAmmo.textContent='خشاب‌گذاری…';}
- else{elAmmoBox.classList.remove('reload');elAmmoBox.classList.toggle('low',ammo<=Math.max(4,T.mag*.2));elAmmo.textContent=faNum(ammo)+' / '+faNum(T.mag);}}
-function updBossHUD(){var src=boss||bossRef;var on=src&&!src.dead&&(src.state==='up'||src.state==='rising'||src===boss);elBossWrap.classList.toggle('on',!!on);if(on&&src.maxhp)elBossFill.style.width=Math.max(0,src.hp/src.maxhp*100)+'%';}
+function updAmmoHUD(){var T=TIERS[runTier],on=!!T.mag&&state===ST.PLAY;_tg44(elAmmoBox,'on',on);if(!on)return;
+ if(reloading>0){_on44(elAmmoBox,'reload');_off44(elAmmoBox,'low');_st44(elAmmo,'خشاب‌گذاری…');}
+ else{_off44(elAmmoBox,'reload');_tg44(elAmmoBox,'low',ammo<=Math.max(4,T.mag*.2));_st44(elAmmo,faNum(ammo)+' / '+faNum(T.mag));}}
+function updBossHUD(){var src=boss||bossRef;var on=src&&!src.dead&&(src.state==='up'||src.state==='rising'||src===boss);_tg44(elBossWrap,'on',on);if(on&&src.maxhp)_sw44(elBossFill,Math.max(0,src.hp/src.maxhp*100));}
 var arrowsUI=[];for(var ai=0;ai<5;ai++){var ad=document.createElement('div');ad.className='tarrow';elThreat.appendChild(ad);arrowsUI.push(ad);}
 function updThreat(){var used=0;
  if(state===ST.PLAY){for(var i=0;i<units.length&&used<arrowsUI.length;i++){var u=units[i];
@@ -9886,8 +9894,9 @@ function updThreat(){var used=0;
   if(v.z<1&&Math.abs(v.x)<.9&&Math.abs(v.y)<.9)continue;
   var ang=Math.atan2(-v.y,v.x);if(v.z>1)ang+=Math.PI;
   var rad=Math.min(innerWidth,innerHeight)*.36,rx=innerWidth*.5+Math.cos(ang)*rad,ry=innerHeight*.5+Math.sin(ang)*rad,d=arrowsUI[used++];
-  d.style.opacity=.95;d.style.transform='translate(-50%,-50%) translate('+rx+'px,'+ry+'px) rotate('+(ang*180/Math.PI+90)+'deg)';}}
- for(var j=used;j<arrowsUI.length;j++)arrowsUI[j].style.opacity=0;}
+  var tf='translate(-50%,-50%) translate('+(rx|0)+'px,'+(ry|0)+'px) rotate('+((ang*180/Math.PI+90)|0)+'deg)';
+  if(d.__tf44!==tf){d.__tf44=tf;d.style.opacity=.95;d.style.transform=tf;}}}
+ for(var j=used;j<arrowsUI.length;j++){var dj=arrowsUI[j];if(dj.__tf44!==''){dj.__tf44='';dj.style.opacity=0;}}}
 function updFoes(){if(state!==ST.PLAY){elFoes.textContent='';return;}var n=0;for(var i=0;i<units.length;i++){var s=units[i].state;if(s==='up'||s==='rising')n++;}elFoes.textContent='دشمن فعال '+faNum(n);}
 
 /* ================= FIRING ================= */
@@ -10158,7 +10167,7 @@ function updGun(rdt,t){var ag=AG();
  ag.muzzleLight.intensity*=Math.exp(-rdt*28);
  var xs=9+spread*26+(1-adsT)*12+(cooldown>0?6:0);elXh.style.setProperty('--s',xs.toFixed(1)+'px');}
 function updLaser(){var on=state===ST.PLAY;beam.visible=on;laserDot.visible=false;if(!on)return;
- rc.setFromCamera(new THREE.Vector2(0,0),camera);
+ CV.set(0,0);rc.setFromCamera(CV,camera);
  var hs=rc.intersectObjects(shootables,false),lo=AG().laser.getWorldPosition(new THREE.Vector3()),end;
  if(hs.length){end=hs[0].point;
   var n=hs[0].face?hs[0].face.normal.clone().transformDirection(hs[0].object.matrixWorld):camera.getWorldDirection(new THREE.Vector3()).negate();
@@ -10217,6 +10226,75 @@ function loop(now){requestAnimationFrame(loop);
  renderer.render(scene,camera);}
 var resizeTimer=null;function doResize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(BASE_PR);renderer.setSize(innerWidth,innerHeight);}
 addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(doResize,120);});
+/* ===== v4.4: merge static world meshes + freeze matrices (pixel-identical) ===== */
+(function(){
+scene.updateMatrixWorld(true);
+var _d44={};
+function _m44(o){_d44[o.id]=1;for(var i=0;i<o.children.length;i++)_m44(o.children[i]);}
+_m44(camera);_m44(laserDot);_m44(beam);_m44(horizonGlow);
+for(var _f=0;_f<flags.length;_f++)_d44[flags[_f].mesh.id]=1;
+for(var _u=0;_u<units.length;_u++){if(units[_u].g)_m44(units[_u].g);}
+function _dyn44(o){var p=o;while(p){var ud=p.userData;if(ud&&(ud.dyn44||ud.target))return true;p=p.parent;}return false;}
+/* --- 9a: material dedup: identical params -> identical pixels, one shared instance --- */
+function _sig44(m){var s=m.type;
+ if(m.color&&m.color.getHexString)s+='|c'+m.color.getHexString();
+ if(m.roughness!==undefined)s+='|r'+(+m.roughness).toFixed(3);
+ if(m.metalness!==undefined)s+='|m'+(+m.metalness).toFixed(3);
+ if(m.map)s+='|map'+m.map.uuid;
+ if(m.emissive&&m.emissive.getHexString&&m.emissive.getHexString()!=='000000'){s+='|e'+m.emissive.getHexString();s+='|ei'+m.emissiveIntensity;}
+ if(m.emissiveMap)s+='|em'+m.emissiveMap.uuid;
+ if(m.normalMap)s+='|nm'+m.normalMap.uuid;
+ if(m.roughnessMap)s+='|rm'+m.roughnessMap.uuid;
+ if(m.aoMap)s+='|ao'+m.aoMap.uuid;
+ s+='|tr'+(m.transparent?1:0)+'|op'+m.opacity+'|sd'+m.side+'|bl'+m.blending+'|dw'+(m.depthWrite?1:0)+'|dt'+(m.depthTest?1:0)+'|at'+m.alphaTest+'|wf'+(m.wireframe?1:0)+'|fs'+(m.flatShading?1:0)+'|tm'+(m.toneMapped===false?0:1);
+ return s;}
+var _mc={};
+scene.traverse(function(o){
+ if(!o.isMesh||o.isSkinnedMesh)return;
+ if(!o.material||!o.material.isMaterial)return;
+ if(_dyn44(o))return;
+ var k=_sig44(o.material);
+ if(_mc[k]){o.material=_mc[k];}else{_mc[k]=o.material;}});
+/* --- 9b: group static meshes by (material, shadows, env-type) and merge geometry --- */
+var _gr={};
+scene.traverse(function(o){
+ if(!o.isMesh||o.isSkinnedMesh)return;
+ if(!o.material||!o.material.isMaterial)return;
+ if(_dyn44(o))return;
+ var k=o.material.uuid+'|'+(o.castShadow?1:0)+'|'+(o.receiveShadow?1:0)+'|'+(o.userData.env||'');
+ if(!_gr[k])_gr[k]=[];
+ _gr[k].push(o);});
+var _old={};
+Object.keys(_gr).forEach(function(k){
+ var arr=_gr[k];if(arr.length<2)return;
+ var parts=[],vc=0,ok=true;
+ for(var i=0;i<arr.length;i++){
+  var g0=arr[i].geometry.clone();g0.applyMatrix4(arr[i].matrixWorld);
+  var g1=g0.index?g0.toNonIndexed():g0;
+  if(!g1.attributes.position||!g1.attributes.normal||!g1.attributes.uv){ok=false;break;}
+  parts.push(g1);vc+=g1.attributes.position.count;}
+ if(!ok||vc===0||vc>260000)return;
+ var pos=new Float32Array(vc*3),nor=new Float32Array(vc*3),uv=new Float32Array(vc*2),off=0;
+ for(var j=0;j<parts.length;j++){var g2=parts[j],n2=g2.attributes.position.count;
+  pos.set(g2.attributes.position.array,off*3);
+  nor.set(g2.attributes.normal.array,off*3);
+  uv.set(g2.attributes.uv.array,off*2);
+  off+=n2;}
+ var mg=new THREE.BufferGeometry();
+ mg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+ mg.setAttribute('normal',new THREE.BufferAttribute(nor,3));
+ mg.setAttribute('uv',new THREE.BufferAttribute(uv,2));
+ var src=arr[0],mm=new THREE.Mesh(mg,src.material);
+ mm.castShadow=src.castShadow;mm.receiveShadow=src.receiveShadow;
+ scene.add(mm);
+ /* originals stay in shootables as invisible raycast proxies (removed from render) */
+ for(var r=0;r<arr.length;r++){if(arr[r].parent)arr[r].parent.remove(arr[r]);}});
+/* --- 9c: freeze static matrices (no per-frame matrix compose for the whole world) --- */
+scene.traverse(function(o){
+ if(o===scene||_d44[o.id])return;
+ o.matrixAutoUpdate=false;o.updateMatrix();});
+scene.updateMatrixWorld(true);
+})();
 questLoad();loadScores();$('wep').textContent=TIERS[eqGun].name;updSky();renderCampaign();renderShop();updCoinsHUD();if(!tryResume())lockScreen(elMenu);requestAnimationFrame(loop);
 })();
 </script>
