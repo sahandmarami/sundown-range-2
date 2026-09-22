@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#f2e2c4">
-<title>میدان غروب ۲ | نسخهٔ ۴ طلایی</title>
+<title>میدان غروب ۲ | نسخهٔ ۴٫۱ طلایی</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{overscroll-behavior:none}
 html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#26313d}
@@ -1634,6 +1634,24 @@ body{color:var(--tx-body)!important}
 #bossGuide .bg-c{color:#8a6a45!important}
 #guideStart{background:linear-gradient(180deg,#fbbf24,#f97316)!important;border-color:rgba(255,255,255,.4)!important;color:#fff!important;text-shadow:0 1px 3px rgba(120,50,0,.45)!important;box-shadow:0 8px 22px rgba(234,88,12,.35)!important}
 </style>
+
+<style id="pause-system-v41">
+/* ================= دکمه توقف و منوی مکث v4.1 ================= */
+#pauseBtn{position:absolute;bottom:calc(20px + env(safe-area-inset-bottom));right:calc(14px + env(safe-area-inset-right));z-index:26;width:52px;height:52px;border:1px solid rgba(255,176,84,.4);background:linear-gradient(180deg,rgba(15,16,22,.82),rgba(10,10,14,.92));clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);display:flex;align-items:center;justify-content:center;gap:5px;opacity:0;pointer-events:none;transition:opacity .3s,transform .08s;cursor:pointer}
+#hud.on~#pauseBtn{opacity:1;pointer-events:auto}
+#pauseBtn i{display:block;width:5px;height:17px;background:#ffd24a;border-radius:1px;box-shadow:0 0 8px rgba(255,210,74,.45)}
+#pauseBtn:active{transform:scale(.93)}
+#pauseMenu{z-index:90;gap:0}
+#pauseMenu .pcard{display:flex;flex-direction:column;gap:12px;width:min(88vw,370px);padding:26px 24px 20px;background:linear-gradient(180deg,rgba(20,21,28,.98),rgba(10,11,15,.99));border:1px solid rgba(255,176,84,.4);border-radius:14px;box-shadow:0 18px 70px rgba(0,0,0,.7);text-align:center}
+#pauseMenu .p-title{font-size:26px;font-weight:900;color:#ffd24a;letter-spacing:.5px}
+#pauseMenu .p-sub{font-size:12.5px;font-weight:700;color:rgba(255,220,170,.78);margin:-4px 0 6px}
+#pauseMenu .btn{width:100%;min-height:52px;padding:13px 18px;font-size:16px}
+#pauseMenu .btn.res{background:linear-gradient(180deg,#ffc46a,#ff8c2e);color:#1c0f02}
+#pauseMenu .btn.again{background:rgba(255,176,84,.1);color:#ffd8a0;border:1px solid rgba(255,176,84,.45);box-shadow:none}
+#pauseMenu .btn.quit{background:rgba(255,83,72,.12);color:#ff9a8f;border:1px solid rgba(255,83,72,.5);box-shadow:none}
+#pauseMenu .p-note{font-size:10.5px;font-weight:700;color:rgba(255,220,170,.45);margin-top:2px}
+@media(max-width:640px){#pauseBtn{width:48px;height:48px;bottom:calc(24px + env(safe-area-inset-bottom))}}
+</style>
 </head>
 <body>
 <canvas id="c"></canvas>
@@ -1645,6 +1663,16 @@ body{color:var(--tx-body)!important}
 <div id="timeBox"><div id="timeHead"><span id="timeDot"></span><span id="timeState">آماده</span></div><div id="time">۲۰٫۰</div><div id="timeBar"><div id="timeFill"></div></div>
 <div id="bossWrap"><div class="bl" id="bossName">HEAVY UNIT</div><div id="bossBar"><div id="bossFill"></div></div></div></div>
 <div id="comboBox"><div class="hlabel">زنجیره</div><div id="combo">×۲</div><div id="comboBar"><i></i></div></div></div>
+<button id="pauseBtn" aria-label="توقف بازی"><i></i><i></i></button>
+<div id="pauseMenu" class="screen off">
+<div class="pcard">
+<div class="p-title">⏸ توقف</div>
+<div class="p-sub" id="pauseInfo">بازی متوقف شد</div>
+<button id="pauseResume" class="btn res">▶ ادامه بازی</button>
+<button id="pauseRestart" class="btn again">↻ شروع دوبارهٔ مرحله</button>
+<button id="pauseExit" class="btn quit">⏏ خروج به منو</button>
+<div class="p-note">پیشرفت این راند ذخیره می‌ماند</div>
+</div></div>
 <div id="ammoBox"><span id="ammo">۱۰۰ / ۱۰۰</span></div>
 <div id="hint">بکش تا نشانه بگیری · رها کن = یک شلیک دقیق · سر = دو برابر</div>
 <div id="xh"><i></i><i></i><i></i><i></i><b></b></div>
@@ -1707,7 +1735,7 @@ body{color:var(--tx-body)!important}
 <li><b>پنل‌های لغزان</b> مسیر تیر را می‌بندند، صبر کن تا باز شوند.</li>
 </ol></section>
 <section class="mpanel" id="p4"><div class="lbhead">۱۰ رکورد برتر <span id="lbMode">(محلی)</span><span id="myRank" class="myrank"></span></div><div id="scoreList"></div></section>
-<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4 GOLD</span></div>
+<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4.1 GOLD</span></div>
 <section class="mpanel on" id="p5">
  <div class="p-head">🎮 انتخاب حالت بازی</div>
  <div class="modecard" id="questCard">
@@ -9140,9 +9168,11 @@ var KINDS={grunt:{hp:1,sc:100,tm:1.8},runner:{hp:1,sc:170,tm:1.4},armor:{hp:1,sc
 var DODGE={grunt:1,runner:1,gunner:1};
 
 /* ================= RENDERER / SCENE ================= */
-var renderer=new THREE.WebGLRenderer({canvas:$('c'),antialias:true,powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(innerWidth,innerHeight);
-renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
+var IS_MOBILE=(/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(navigator.userAgent||''))||(((navigator.maxTouchPoints||0)>1)&&Math.min(screen.width||9e9,screen.height||9e9)<820);if(IS_MOBILE)document.documentElement.classList.add('mob');
+var renderer=new THREE.WebGLRenderer({canvas:$('c'),antialias:!IS_MOBILE,stencil:false,powerPreference:'high-performance'});
+var PR_CAP=IS_MOBILE?Math.min(window.devicePixelRatio||1,1.35):Math.min(window.devicePixelRatio||1,2);var PR_FLOOR=IS_MOBILE?.55:.8,curPR=IS_MOBILE?Math.min(window.devicePixelRatio||1,1.1):PR_CAP;
+renderer.setPixelRatio(curPR);renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=IS_MOBILE?THREE.PCFShadowMap:THREE.PCFSoftShadowMap;renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
 var scene=new THREE.Scene();scene.fog=new THREE.Fog(0xbe8a6d,58,270);
 var camera=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.05,400);camera.rotation.order='YXZ';camera.position.set(0,1.7,0);scene.add(camera);
 function ctex(w,h,fn,rx,ry){var c=document.createElement('canvas');c.width=w;c.height=h;var g=c.getContext('2d');fn(g,w,h);var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=renderer.capabilities.getMaxAnisotropy();t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;if(rx){t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rx,ry||rx);}return t;}
@@ -9197,7 +9227,7 @@ scene.add(new THREE.Mesh(new THREE.SphereGeometry(300,32,16),skyMat));
 var starGeo=new THREE.BufferGeometry(),starPos=new Float32Array(140*3);for(var si2=0;si2<140;si2++){var th2=R()*Math.PI*2,ph2=R()*Math.PI*.4,r2=250;starPos[si2*3]=r2*Math.sin(ph2)*Math.cos(th2);starPos[si2*3+1]=r2*Math.cos(ph2)+30;starPos[si2*3+2]=r2*Math.sin(ph2)*Math.sin(th2);}starGeo.setAttribute('position',new THREE.BufferAttribute(starPos,3));
 var starMat=new THREE.PointsMaterial({color:0xffffff,size:.7,transparent:true,opacity:.35,sizeAttenuation:true});scene.add(new THREE.Points(starGeo,starMat));
 var hemi=new THREE.HemisphereLight(0x7d9ccc,0x8a6d4c,1.02);scene.add(hemi);var amb=new THREE.AmbientLight(0xffe0bd,.34);scene.add(amb);
-var sun=new THREE.DirectionalLight(0xffd3a4,2.05);sun.position.set(-26,17,-58);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);var sc2=sun.shadow.camera;sc2.left=-40;sc2.right=40;sc2.top=34;sc2.bottom=-30;sc2.near=10;sc2.far=150;sun.shadow.bias=-.0006;sun.shadow.normalBias=.02;scene.add(sun);scene.add(sun.target);
+var sun=new THREE.DirectionalLight(0xffd3a4,2.05);sun.position.set(-26,17,-58);sun.castShadow=true;sun.shadow.mapSize.set(IS_MOBILE?1024:2048,IS_MOBILE?1024:2048);var sc2=sun.shadow.camera;sc2.left=-40;sc2.right=40;sc2.top=34;sc2.bottom=-30;sc2.near=10;sc2.far=150;sun.shadow.bias=-.0006;sun.shadow.normalBias=.02;scene.add(sun);scene.add(sun.target);
 var rimLight=new THREE.DirectionalLight(0x7fa8e6,.5);rimLight.position.set(20,10,20);scene.add(rimLight);
 addMesh(new THREE.PlaneGeometry(440,440),matGround,0,0,0,{rx:-Math.PI/2,rs:true,env:'dirt'});
 addMesh(new THREE.PlaneGeometry(11,44),M(0x8f7659,1),0,.012,-21,{rx:-Math.PI/2,rs:true,env:'dirt'});
@@ -9243,11 +9273,11 @@ makeFlag(-12,-10,0xcc3333);makeFlag(12,-25,0x3355aa);makeFlag(-12,-33,0xd9a02a);
 addMesh(new THREE.CylinderGeometry(.22,.26,.65,12),M(0x3a3535,.75,.2),-5,.325,-40,{cs:true,env:'metal'});
 addMesh(new THREE.CylinderGeometry(.22,.26,.65,12),M(0x3a3535,.75,.2),-4.4,.325,-40.3,{cs:true,env:'metal'});
 var fireLight=new THREE.PointLight(0xff6a20,0,9,2);fireLight.position.set(-4.7,1,-40);scene.add(fireLight);
-var SMOKE_N=20,smokePos=new Float32Array(SMOKE_N*3),smokeVel=[];for(var si=0;si<SMOKE_N;si++){smokePos[si*3]=-4.7+(R()-.5)*.3;smokePos[si*3+1]=.7+R()*2;smokePos[si*3+2]=-40+(R()-.5)*.3;smokeVel.push(.12+R()*.2);}
+var SMOKE_N=IS_MOBILE?12:20,smokePos=new Float32Array(SMOKE_N*3),smokeVel=[];for(var si=0;si<SMOKE_N;si++){smokePos[si*3]=-4.7+(R()-.5)*.3;smokePos[si*3+1]=.7+R()*2;smokePos[si*3+2]=-40+(R()-.5)*.3;smokeVel.push(.12+R()*.2);}
 var smokeGeo=new THREE.BufferGeometry();smokeGeo.setAttribute('position',new THREE.BufferAttribute(smokePos,3));scene.add(new THREE.Points(smokeGeo,new THREE.PointsMaterial({color:0x999999,size:.2,transparent:true,opacity:.22,depthWrite:false,sizeAttenuation:true})));
-var EMB=35,epos=new Float32Array(EMB*3),evel=[];for(var ei=0;ei<EMB;ei++){epos[ei*3]=(R()*2-1)*13;epos[ei*3+1]=R()*5;epos[ei*3+2]=-2-R()*40;evel.push(.25+R()*.5);}
+var EMB=IS_MOBILE?22:35,epos=new Float32Array(EMB*3),evel=[];for(var ei=0;ei<EMB;ei++){epos[ei*3]=(R()*2-1)*13;epos[ei*3+1]=R()*5;epos[ei*3+2]=-2-R()*40;evel.push(.25+R()*.5);}
 var embGeo=new THREE.BufferGeometry();embGeo.setAttribute('position',new THREE.BufferAttribute(epos,3));var embMat=new THREE.PointsMaterial({color:0xff9a3a,size:.06,transparent:true,opacity:.5,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true});scene.add(new THREE.Points(embGeo,embMat));
-var DUST=160,dpos=new Float32Array(DUST*3),dbase=new Float32Array(DUST*3),dphase=new Float32Array(DUST);for(var di=0;di<DUST;di++){dbase[di*3]=dpos[di*3]=(R()*2-1)*13;dbase[di*3+1]=dpos[di*3+1]=.2+R()*3.6;dbase[di*3+2]=dpos[di*3+2]=-1-R()*40;dphase[di]=R()*7;}
+var DUST=IS_MOBILE?90:160,dpos=new Float32Array(DUST*3),dbase=new Float32Array(DUST*3),dphase=new Float32Array(DUST);for(var di=0;di<DUST;di++){dbase[di*3]=dpos[di*3]=(R()*2-1)*13;dbase[di*3+1]=dpos[di*3+1]=.2+R()*3.6;dbase[di*3+2]=dpos[di*3+2]=-1-R()*40;dphase[di]=R()*7;}
 var dgeo=new THREE.BufferGeometry();dgeo.setAttribute('position',new THREE.BufferAttribute(dpos,3));scene.add(new THREE.Points(dgeo,new THREE.PointsMaterial({color:0xffd9a0,size:.035,transparent:true,opacity:.3,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true})));
 var horizonGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color:0xffb066,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false}));horizonGlow.scale.set(70,40,1);horizonGlow.position.set(0,6,-160);scene.add(horizonGlow);
 
@@ -10049,6 +10079,20 @@ var armTO=0;retryBtn.addEventListener('click',function(e){e.stopPropagation();in
  if(retryBtn.dataset.armed==='1'){clearTimeout(armTO);resetRetry();sfxUI();if(campStage)startCampaign(campStage-1);else start();}
  else{retryBtn.dataset.armed='1';retryBtn.textContent='تأیید؟ ضربه دوم';retryBtn.classList.add('armed');clearTimeout(armTO);armTO=setTimeout(resetRetry,2500);}});
 
+/* ================= منوی توقف v4.1 ================= */
+var elPauseMenu=$('pauseMenu'),pauseOpen=false;
+function openPause(){if(state!==ST.PLAY||pauseGame||pauseOpen)return;pauseOpen=true;pauseGame=true;held=false;aimId=null;autoFired=false;saveRun();var pi=$('pauseInfo');if(pi)pi.textContent=(campStage?'مرحله '+faNum(campStage)+' · ':'')+'امتیاز '+faNum(score)+' · سطح '+faNum(level);musicSet(false);sfxUI();elPauseMenu.classList.remove('off');}
+function closePause(){if(!pauseOpen)return;pauseOpen=false;pauseGame=false;elPauseMenu.classList.add('off');last=performance.now();if(state===ST.PLAY)musicSet(true);sfxUI();}
+function pauseRestart(){if(!pauseOpen)return;pauseOpen=false;pauseGame=false;elPauseMenu.classList.add('off');resetRetry();lastStart=0;if(campStage)startCampaign(campStage-1);else start();}
+function pauseExit(){if(!pauseOpen)return;pauseOpen=false;pauseGame=false;elPauseMenu.classList.add('off');toMenu();}
+$('pauseBtn').addEventListener('pointerdown',function(e){e.stopPropagation();});
+$('pauseBtn').addEventListener('click',function(e){e.stopPropagation();initAudio();openPause();});
+$('pauseResume').addEventListener('click',function(e){e.stopPropagation();closePause();});
+$('pauseRestart').addEventListener('click',function(e){e.stopPropagation();initAudio();sfxUI();pauseRestart();});
+$('pauseExit').addEventListener('click',function(e){e.stopPropagation();pauseExit();});
+elPauseMenu.addEventListener('click',function(e){if(e.target===elPauseMenu)closePause();});
+addEventListener('keydown',function(e){if(e.key==='Escape'){if(pauseOpen)closePause();else if(state===ST.PLAY&&!pauseGame)openPause();}});
+
 (function(){var tabs=[].slice.call(document.querySelectorAll('.mtab'));
  window.showTab=function(id){tabs.forEach(function(x){x.classList.toggle('on',x.dataset.p===id);});
   ['p5','p6','p1','p3','p4'].forEach(function(pid){$(pid).classList.toggle('on',pid===id);});};
@@ -10118,10 +10162,16 @@ function updLaser(){var on=state===ST.PLAY;beam.visible=on;laserDot.visible=fals
  var bp=beamGeo.attributes.position;bp.setXYZ(0,lo.x,lo.y,lo.z);bp.setXYZ(1,end.x,end.y,end.z);bp.needsUpdate=true;
  beam.material.opacity=.16+.2*adsT;}
 
+/* ================= ADAPTIVE RESOLUTION v4.1 ================= */
+var ftAcc=0,ftN=0,ftWait=2.5,prAnnounced=false;
+function adaptPR(rdt){ftAcc+=rdt;ftN++;ftWait-=rdt;if(ftWait>0||ftN<24)return;var fps=ftN/Math.max(.0001,ftAcc);ftAcc=0;ftN=0;var ch=false;
+ if(fps<44){if(curPR>PR_FLOOR+.001){curPR=Math.max(PR_FLOOR,curPR-.12);ch=true;if(!prAnnounced){prAnnounced=true;announce('کیفیت گرافیک برای اجرای روان‌تر خودکار تنظیم شد');}}}
+ else if(fps>57&&curPR<PR_CAP-.001){curPR=Math.min(PR_CAP,curPR+.06);ch=true;}
+ if(ch){renderer.setPixelRatio(curPR);ftWait=2.4;}else ftWait=1.2;}
 /* ================= LOOP ================= */
 var last=performance.now(),artT=9;var dawnPulse=0;
 function loop(now){requestAnimationFrame(loop);
- var rdt=Math.min(.05,(now-last)/1000)||.016;last=now;var t=now/1000;dawnPulse=.5+.5*Math.sin(t*.18);
+ var rdt=Math.min(.05,(now-last)/1000)||.016;last=now;var t=now/1000;dawnPulse=.5+.5*Math.sin(t*.18);if(!pauseGame)adaptPR(rdt);
  if(slowT>0){slowT-=rdt;timeScale+=(slowF-timeScale)*Math.min(1,rdt*22);}else timeScale+=(1-timeScale)*Math.min(1,rdt*7);
  var gdt=rdt*timeScale;
   if(pauseGame)gdt=0;
@@ -10163,7 +10213,7 @@ function loop(now){requestAnimationFrame(loop);
  updCamera(rdt,t);updGun(rdt,t);updLaser();updAmmoHUD();updBossHUD();updThreat();
  if(state===ST.PLAY)updHUD();
  renderer.render(scene,camera);}
-var resizeTimer=null;function doResize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setSize(innerWidth,innerHeight);}
+var resizeTimer=null;function doResize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(curPR);renderer.setSize(innerWidth,innerHeight);}
 addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(doResize,120);});
 questLoad();loadScores();$('wep').textContent=TIERS[eqGun].name;updSky();renderCampaign();renderShop();updCoinsHUD();if(!tryResume())lockScreen(elMenu);requestAnimationFrame(loop);
 })();
