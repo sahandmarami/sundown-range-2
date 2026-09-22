@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#f2e2c4">
-<title>میدان غروب ۲ | نسخهٔ ۴٫۴ طلایی</title>
+<title>میدان غروب ۲ | نسخهٔ ۴٫۵ طلایی</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{overscroll-behavior:none}
 html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#26313d}
@@ -1742,7 +1742,7 @@ body{color:var(--tx-body)!important}
 <li><b>پنل‌های لغزان</b> مسیر تیر را می‌بندند، صبر کن تا باز شوند.</li>
 </ol></section>
 <section class="mpanel" id="p4"><div class="lbhead">۱۰ رکورد برتر <span id="lbMode">(محلی)</span><span id="myRank" class="myrank"></span></div><div id="scoreList"></div></section>
-<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4.4 GOLD</span></div>
+<div class="mfoot"><span>SUNDOWN RANGE II</span><i>·</i><span>V4.5 GOLD</span></div>
 <section class="mpanel on" id="p5">
  <div class="p-head">🎮 انتخاب حالت بازی</div>
  <div class="modecard" id="questCard">
@@ -10028,7 +10028,7 @@ function resetRound(){
  tracers.forEach(function(t){scene.remove(t.m);});tracers.length=0;
  arrows.forEach(function(a){scene.remove(a.g);});arrows.length=0;
  casings.forEach(function(c){scene.remove(c.m);});casings.length=0;
- elFloats.innerHTML='';elFlash.style.opacity=0;document.body.classList.remove('low');elFever.classList.remove('on');
+ elFloats.innerHTML='';elFlash.style.opacity=0;_tg44(document.body,'low',false);elFever.classList.remove('on');
  yaw=0;pitch=-.06;prevYaw=0;prevPitch=-.06;lagY=0;lagP=0;kickP=0;kickY=0;shake=0;slowT=0;timeScale=1;recoil=0;flashT=0;held=false;aimId=null;autoFired=false;
  updSky();syncBest();updScoreHUD(false);updComboHUD();updLevel();updHUD();updBossHUD();
  if(campStage&&campaignBoss)bossPhase=campaignBoss.cmd?'wait':'fight';else bossPhase='none';
@@ -10046,7 +10046,7 @@ function start(){if(!(nameInput.value||'').trim()){openNameModal();return;}
  elMenu.classList.add('off');elOver.classList.add('off');elHud.classList.add('on');elXh.classList.add('on');elHint.classList.remove('off');
  announce('شروع!');sfxGo();hap('i','medium');musicSet(true);}
 function gameOver(){if(state!==ST.PLAY)return;state=ST.OVER;pauseGame=false;clearRun();var prevBest=best;if(campStage&&!campWon)campResult={win:false,stars:0};musicSet(false);sfxOver();hap('n','warning');
- document.body.classList.remove('low');elFever.classList.remove('on');feverOn=false;elXh.classList.remove('on');updHUD();
+ _tg44(document.body,'low',false);elFever.classList.remove('on');feverOn=false;elXh.classList.remove('on');updHUD();
  var acc=shots?Math.round(hits/shots*100):0;questProg('score',score,true);var rank=addScore(playerName,score,level,acc);
  profAdd(Math.max(1,Math.round(score/120)));
  var endC=Math.round(score/220);if(endC>0)addCoins(endC);
@@ -10073,7 +10073,7 @@ function gameOver(){if(state!==ST.PLAY)return;state=ST.OVER;pauseGame=false;clea
   resetRetry();elOver.classList.remove('off');lockScreen(elOver);elHud.classList.remove('on');},750);}
 function toMenu(){state=ST.MENU;clearTimeout(overTO);clearRun();musicSet(true);level=1;lvProg=0;removeDrone();removeBoss();updSky();refreshNameUI();campStage=0;campaignBoss=null;bossPhase='none';pauseGame=false;clearTimeout(window._stage10BossTO);hideBossGuide();renderCampaign();renderShop();
  elOver.classList.add('off');elMenu.classList.remove('off');lockScreen(elMenu);elHud.classList.remove('on');elXh.classList.remove('on');
- document.body.classList.remove('low');elFever.classList.remove('on');feverOn=false;syncBest();dirT=1;}
+ _tg44(document.body,'low',false);elFever.classList.remove('on');feverOn=false;syncBest();dirT=1;}
 $('startBtn').addEventListener('click',function(e){e.stopPropagation();if(state===ST.PLAY)return;initAudio();sfxUI();start();});
 $('menuBtn').addEventListener('click',function(e){e.stopPropagation();sfxUI();toMenu();});
 $('nextBtn').addEventListener('click',function(e){e.stopPropagation();initAudio();sfxUI();resetRetry();startCampaign(campStage);});
@@ -10226,75 +10226,6 @@ function loop(now){requestAnimationFrame(loop);
  renderer.render(scene,camera);}
 var resizeTimer=null;function doResize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(BASE_PR);renderer.setSize(innerWidth,innerHeight);}
 addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(doResize,120);});
-/* ===== v4.4: merge static world meshes + freeze matrices (pixel-identical) ===== */
-(function(){
-scene.updateMatrixWorld(true);
-var _d44={};
-function _m44(o){_d44[o.id]=1;for(var i=0;i<o.children.length;i++)_m44(o.children[i]);}
-_m44(camera);_m44(laserDot);_m44(beam);_m44(horizonGlow);
-for(var _f=0;_f<flags.length;_f++)_d44[flags[_f].mesh.id]=1;
-for(var _u=0;_u<units.length;_u++){if(units[_u].g)_m44(units[_u].g);}
-function _dyn44(o){var p=o;while(p){var ud=p.userData;if(ud&&(ud.dyn44||ud.target))return true;p=p.parent;}return false;}
-/* --- 9a: material dedup: identical params -> identical pixels, one shared instance --- */
-function _sig44(m){var s=m.type;
- if(m.color&&m.color.getHexString)s+='|c'+m.color.getHexString();
- if(m.roughness!==undefined)s+='|r'+(+m.roughness).toFixed(3);
- if(m.metalness!==undefined)s+='|m'+(+m.metalness).toFixed(3);
- if(m.map)s+='|map'+m.map.uuid;
- if(m.emissive&&m.emissive.getHexString&&m.emissive.getHexString()!=='000000'){s+='|e'+m.emissive.getHexString();s+='|ei'+m.emissiveIntensity;}
- if(m.emissiveMap)s+='|em'+m.emissiveMap.uuid;
- if(m.normalMap)s+='|nm'+m.normalMap.uuid;
- if(m.roughnessMap)s+='|rm'+m.roughnessMap.uuid;
- if(m.aoMap)s+='|ao'+m.aoMap.uuid;
- s+='|tr'+(m.transparent?1:0)+'|op'+m.opacity+'|sd'+m.side+'|bl'+m.blending+'|dw'+(m.depthWrite?1:0)+'|dt'+(m.depthTest?1:0)+'|at'+m.alphaTest+'|wf'+(m.wireframe?1:0)+'|fs'+(m.flatShading?1:0)+'|tm'+(m.toneMapped===false?0:1);
- return s;}
-var _mc={};
-scene.traverse(function(o){
- if(!o.isMesh||o.isSkinnedMesh)return;
- if(!o.material||!o.material.isMaterial)return;
- if(_dyn44(o))return;
- var k=_sig44(o.material);
- if(_mc[k]){o.material=_mc[k];}else{_mc[k]=o.material;}});
-/* --- 9b: group static meshes by (material, shadows, env-type) and merge geometry --- */
-var _gr={};
-scene.traverse(function(o){
- if(!o.isMesh||o.isSkinnedMesh)return;
- if(!o.material||!o.material.isMaterial)return;
- if(_dyn44(o))return;
- var k=o.material.uuid+'|'+(o.castShadow?1:0)+'|'+(o.receiveShadow?1:0)+'|'+(o.userData.env||'');
- if(!_gr[k])_gr[k]=[];
- _gr[k].push(o);});
-var _old={};
-Object.keys(_gr).forEach(function(k){
- var arr=_gr[k];if(arr.length<2)return;
- var parts=[],vc=0,ok=true;
- for(var i=0;i<arr.length;i++){
-  var g0=arr[i].geometry.clone();g0.applyMatrix4(arr[i].matrixWorld);
-  var g1=g0.index?g0.toNonIndexed():g0;
-  if(!g1.attributes.position||!g1.attributes.normal||!g1.attributes.uv){ok=false;break;}
-  parts.push(g1);vc+=g1.attributes.position.count;}
- if(!ok||vc===0||vc>260000)return;
- var pos=new Float32Array(vc*3),nor=new Float32Array(vc*3),uv=new Float32Array(vc*2),off=0;
- for(var j=0;j<parts.length;j++){var g2=parts[j],n2=g2.attributes.position.count;
-  pos.set(g2.attributes.position.array,off*3);
-  nor.set(g2.attributes.normal.array,off*3);
-  uv.set(g2.attributes.uv.array,off*2);
-  off+=n2;}
- var mg=new THREE.BufferGeometry();
- mg.setAttribute('position',new THREE.BufferAttribute(pos,3));
- mg.setAttribute('normal',new THREE.BufferAttribute(nor,3));
- mg.setAttribute('uv',new THREE.BufferAttribute(uv,2));
- var src=arr[0],mm=new THREE.Mesh(mg,src.material);
- mm.castShadow=src.castShadow;mm.receiveShadow=src.receiveShadow;
- scene.add(mm);
- /* originals stay in shootables as invisible raycast proxies (removed from render) */
- for(var r=0;r<arr.length;r++){if(arr[r].parent)arr[r].parent.remove(arr[r]);}});
-/* --- 9c: freeze static matrices (no per-frame matrix compose for the whole world) --- */
-scene.traverse(function(o){
- if(o===scene||_d44[o.id])return;
- o.matrixAutoUpdate=false;o.updateMatrix();});
-scene.updateMatrixWorld(true);
-})();
 questLoad();loadScores();$('wep').textContent=TIERS[eqGun].name;updSky();renderCampaign();renderShop();updCoinsHUD();if(!tryResume())lockScreen(elMenu);requestAnimationFrame(loop);
 })();
 </script>
